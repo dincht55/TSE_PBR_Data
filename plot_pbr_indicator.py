@@ -3,6 +3,7 @@ import datetime
 import pandas as pd
 import yfinance as yf
 import matplotlib.pyplot as plt
+from datetime import timedelta
 from collections import defaultdict
 
 def pick_first_workday_each_week(data_dict):
