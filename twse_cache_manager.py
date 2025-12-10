@@ -321,7 +321,7 @@ class TWSECacheManager:
             self.show_Inf(results, setDateIndex)
 
 
-    def main(self):
+    def main(self, show=True):
         cache = self.cache_init()
 
         # 取得近日日期
@@ -334,6 +334,7 @@ class TWSECacheManager:
 
         self.git_commit_and_push("json_data.json", "更新 TWSE 資料")
 
-        print('\n顯示近31天的結果：')
-        # 顯示近期結果
-        self.show_Inf(all_results)
+        if show:
+            print('\n顯示近31天的結果：')
+            # 顯示近期結果
+            self.show_Inf(all_results)
