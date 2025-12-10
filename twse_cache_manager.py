@@ -202,7 +202,7 @@ class TWSECacheManager:
         return dates[::-1]
 
 
-    def batch_download_twse(self, month_dates: dict, cache: dict) -> dict:
+    def batch_download_twse(self, month_dates: dict, cache: dict, show=True) -> dict:
         """
         使用 get_recent_dates() 取得日期集合，
         依序呼叫 download_twse_csv() 下載資料，
@@ -212,8 +212,9 @@ class TWSECacheManager:
         for d in month_dates:
             if d in cache:
                 results[d] = cache[d]
-                # 如果已下載過，直接取用
-                print(f"日期 {d} 已下載過，直接使用快取結果")
+                if show:
+                    # 如果已下載過，直接取用
+                    print(f"日期 {d} 已下載過，直接使用快取結果")
             else:
                 # 沒下載過 → 呼叫 download_twse_csv
                 inf = self.download_twse_csv(d)
@@ -304,8 +305,9 @@ class TWSECacheManager:
         for d in days:
             if d in cache:
                 results[d] = cache[d]
-                # 如果已下載過，直接取用
-                print(f"日期 {d} 已下載過，直接使用快取結果")
+                if show:
+                    # 如果已下載過，直接取用
+                    print(f"日期 {d} 已下載過，直接使用快取結果")
             else:
                 # 沒下載過 → 呼叫 download_twse_csv
                 inf = self.download_twse_csv(d)
@@ -328,7 +330,7 @@ class TWSECacheManager:
         dates = self.month_dates(datetime.today().strftime("%Y%m%d"))
 
         # 下載所有日期資料
-        all_results, cache = self.batch_download_twse(dates, cache)
+        all_results, cache = self.batch_download_twse(dates, cache, show)
 
         self.update_json('json_data.json', cache)
 
