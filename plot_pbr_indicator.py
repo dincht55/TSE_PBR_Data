@@ -122,7 +122,7 @@ def plot_close_and_value3(df_result, code, text="Day"):
     axes[0].tick_params(labelbottom=True)  # 開啟上圖的 x 軸標籤
     axes[0].plot(df_result["date"], df_result["close"], marker=".", color="blue", label="Close Price")
     axes[0].set_title(f"{code} {text} Closing price trend")
-    axes[0].set_xlabel("Data")
+    axes[0].set_xlabel("Date")
     axes[0].set_ylabel("Close")
     axes[0].legend()
     axes[0].grid(True)
@@ -130,7 +130,7 @@ def plot_close_and_value3(df_result, code, text="Day"):
     # 下圖：value3
     axes[1].plot(df_result["date"], df_result["value3"], marker=".", color="orange", label="PB-C")
     axes[1].set_title(f"{code} PB-C {text} Indicator Trends")
-    axes[1].set_xlabel("PB-C")
+    axes[1].set_xlabel("Date")
     axes[1].set_ylabel("PB-C Value")
     axes[1].legend()
     axes[1].grid(True)
