@@ -340,5 +340,5 @@ class TWSECacheManager:
             print('\n顯示近31天的結果：')
             # 顯示近期結果
             self.show_Inf(all_results)
-        else:
-            return cache
+
+        return cache
