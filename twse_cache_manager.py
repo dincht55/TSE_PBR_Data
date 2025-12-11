@@ -137,7 +137,7 @@ class TWSECacheManager:
             print('沒有檔案下載')
             return {}
 
-    def show_cache(self, ):
+    def show_cache(self):
         cache = self.cache_init()
         print(f'現有 Cache 長度: {len(cache)}')
         self.show_Inf(cache, {"20251201": 949})
@@ -201,7 +201,6 @@ class TWSECacheManager:
         # 由舊到新排序
         return dates[::-1]
 
-
     def batch_download_twse(self, month_dates: dict, cache: dict, show=True) -> dict:
         """
         使用 get_recent_dates() 取得日期集合，
@@ -253,7 +252,6 @@ class TWSECacheManager:
                 break
 
         return result
-
 
     def show_Inf(self, key_value: dict, index_map: dict = {"20251201": 949}, show_len=0):
         if show_len != 0:
@@ -324,7 +322,6 @@ class TWSECacheManager:
         if show:
             print("\n結果顯示：")
             self.show_Inf(results, setDateIndex)
-
 
     def main(self, show=True):
         cache = self.cache_init()
