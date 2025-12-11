@@ -255,9 +255,12 @@ class TWSECacheManager:
         return result
 
 
-    def show_Inf(self, key_value: dict, index_map: dict = {"20251201": 949}):
-        # 先排序日期
-        sorted_dates = sorted(key_value.keys())
+    def show_Inf(self, key_value: dict, index_map: dict = {"20251201": 949}, show_len=0):
+        if show_len != 0:
+            sorted_dates = dict(list(key_value.items())[-show_len:])
+            sorted_dates = sorted(sorted_dates.keys())
+        else:
+            sorted_dates = sorted(key_value.keys())
 
         # 預設 index 從 1
         index_dict = {}
