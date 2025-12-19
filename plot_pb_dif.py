@@ -7,7 +7,14 @@ from datetime import datetime, timedelta
 
 class PlotPBDif:
     def __init__(self):
-        pass
+        self.stock_no = None
+        self.start_month = None
+        self.stock_id = None
+        self.df = None
+        self.tdf = None
+        self.re = None
+        self.df_dict = None 
+        self.merged_df = None
 
     def calculate_bollinger(self, series, window=20, num_std=2):
         """計算布林通道上下軌"""
@@ -52,6 +59,8 @@ class PlotPBDif:
         return df
 
     def get_twse_bwibbu(self, stock_no, start_month):
+        self.stock_no = stock_no
+        self.start_month = start_month
         today = datetime.today().strftime("%Y%m%d")
         start = pd.Period(str(start_month)[:6], freq="M")
         end = pd.Period(today[:6], freq="M")
@@ -98,6 +107,7 @@ class PlotPBDif:
             merged_df = merged_df.sort_values("日期").reset_index(drop=True)
             return merged_df
         else:
+            print("無資料合拼.")
             return None
 
     def get_stock_close_batch(self, date_keys, stock_id):
@@ -107,6 +117,7 @@ class PlotPBDif:
         stock_id: 股票代號 (數字，例如 2330, 2317)
         回傳: { "YYYYMMDD": Close }
         """
+        self.stock_id = stock_id
         # 股票代號轉成 Yahoo Finance 格式
         if stock_id == "^TWII":
             ticker_symbol = stock_id
@@ -170,13 +181,13 @@ class PlotPBDif:
 
 
     def main(self, stock, start_month):
-        df = self.get_twse_bwibbu(stock_no=stock, start_month=start_month)
-        tdf = self.calculate_indicator(df)
-        re = self.get_stock_close_batch(tdf.日期, stock)
+        self.df = self.get_twse_bwibbu(stock_no=stock, start_month=start_month)
+        self.tdf = self.calculate_indicator(self.df)
+        self.re = self.get_stock_close_batch(self.tdf.日期, stock)
 
         # 合拼資料
-        df_dict = pd.DataFrame(list(re.items()), columns=["日期", "Close"])
-        merged_df = pd.merge(tdf, df_dict, on="日期", how="left")
-        self.plot_close_and_percent_b_diff(merged_df, stock)
+        self.df_dict = pd.DataFrame(list(self.re.items()), columns=["日期", "Close"])
+        self.merged_df = pd.merge(self.tdf, self.df_dict, on="日期", how="left")
+        self.plot_close_and_percent_b_diff(self.merged_df, stock)
 
         return merged_df
