@@ -55,9 +55,10 @@ class PlotPBDif:
 
         # 刪除含有 NaN 的列及計算欄位為 0 的列
         df = df.dropna().reset_index(drop=True)
-        # df = df[~((df["PE_percent_b"] == 0) |
-        #     (df["DY_percent_b"] == 0) |
-        #     (df["percent_b_diff"] == 0))].reset_index(drop=True)
+
+        df = df[~((df["PE_percent_b"] == 0) |
+            (df["DY_percent_b"] == 0) |
+            (df["percent_b_diff"] == 0))].reset_index(drop=True)
 
         return df
 
