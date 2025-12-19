@@ -24,12 +24,10 @@ def calculate_indicator(df):
     # 本益比布林通道
     pe_up, pe_down = calculate_bollinger(pe_ma5, 20, 2)
     pe_percent_b = ((pe_ma5 - pe_down) * 100 / (pe_up - pe_down)).fillna(0)
-    pe_percent_b[(pe_up - pe_down) == 0] = 0
 
     # 殖利率布林通道
     dy_up, dy_down = calculate_bollinger(dy_ma5, 20, 2)
     dy_percent_b = ((dy_ma5 - dy_down) * 100 / (dy_up - dy_down)).fillna(0)
-    dy_percent_b[(dy_up - dy_down) == 0] = 0
 
     # %b_DIF
     percent_b_diff = dy_percent_b - pe_percent_b
