@@ -109,6 +109,7 @@ def get_stock_close_batch(date_keys, stock_id):
     else:
         ticker_symbol = f"{stock_id}.TW"
 
+    print(date_keys)
     # 轉成 datetime.date
     dates = [datetime.strptime(d, "%Y%m%d").date() for d in date_keys]
     start = min(dates)
