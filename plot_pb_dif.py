@@ -27,7 +27,7 @@ class PlotPBDif:
     def calculate_indicator(self, df):
         # 假設要處理的欄位是 "本益比" 和 "殖利率(%)"
         df = df[(df["本益比"] != "-") & (df["殖利率(%)"] != "-")]
-        
+
         df["本益比"] = pd.to_numeric(df["本益比"], errors='coerce')
         df["殖利率(%)"] = pd.to_numeric(df["殖利率(%)"], errors='coerce')
 
@@ -55,9 +55,9 @@ class PlotPBDif:
 
         # 刪除含有 NaN 的列及計算欄位為 0 的列
         df = df.dropna().reset_index(drop=True)
-        df = df[~((df["PE_percent_b"] == 0) |
-            (df["DY_percent_b"] == 0) |
-            (df["percent_b_diff"] == 0))].reset_index(drop=True)
+        # df = df[~((df["PE_percent_b"] == 0) |
+        #     (df["DY_percent_b"] == 0) |
+        #     (df["percent_b_diff"] == 0))].reset_index(drop=True)
 
         return df
 
