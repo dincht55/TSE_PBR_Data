@@ -25,6 +25,9 @@ class PlotPBDif:
         return upper, lower
 
     def calculate_indicator(self, df):
+        # 假設要處理的欄位是 "本益比" 和 "殖利率(%)"
+        df = df[(df["本益比"] != "-") & (df["殖利率(%)"] != "-")]
+        
         df["本益比"] = pd.to_numeric(df["本益比"], errors='coerce')
         df["殖利率(%)"] = pd.to_numeric(df["殖利率(%)"], errors='coerce')
 
@@ -124,7 +127,7 @@ class PlotPBDif:
         else:
             ticker_symbol = f"{stock_id}.TW"
 
-        
+        print(date_keys)
         # 轉成 datetime.date
         dates = [datetime.strptime(d, "%Y%m%d").date() for d in date_keys]
         print(dates)
