@@ -127,10 +127,8 @@ class PlotPBDif:
         else:
             ticker_symbol = f"{stock_id}.TW"
 
-        print(date_keys)
         # 轉成 datetime.date
         dates = [datetime.strptime(d, "%Y%m%d").date() for d in date_keys]
-        print(dates)
         start = min(dates)
         end = max(dates) + timedelta(days=1)
 
@@ -186,11 +184,14 @@ class PlotPBDif:
     def main(self, stock, start_month):
         self.df = self.get_twse_bwibbu(stock_no=stock, start_month=start_month)
         self.tdf = self.calculate_indicator(self.df)
-        self.re = self.get_stock_close_batch(self.tdf.日期, stock)
+        if len(self.tdf) == 0:
+            print(f"{stock} 無本益比資料可轉換圖表")
+        else:
+            self.re = self.get_stock_close_batch(self.tdf.日期, stock)
 
-        # 合拼資料
-        self.df_dict = pd.DataFrame(list(self.re.items()), columns=["日期", "Close"])
-        self.merged_df = pd.merge(self.tdf, self.df_dict, on="日期", how="left")
-        self.plot_close_and_percent_b_diff(self.merged_df, stock)
+            # 合拼資料
+            self.df_dict = pd.DataFrame(list(self.re.items()), columns=["日期", "Close"])
+            self.merged_df = pd.merge(self.tdf, self.df_dict, on="日期", how="left")
+            self.plot_close_and_percent_b_diff(self.merged_df, stock)
 
-        return merged_df
+            return self.merged_df
