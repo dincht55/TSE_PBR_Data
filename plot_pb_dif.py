@@ -14,6 +14,9 @@ def calculate_bollinger(series, window=20, num_std=2):
     return upper, lower
 
 def calculate_indicator(df):
+    df["本益比"] = pd.to_numeric(df["本益比"], errors='coerce')
+    df["殖利率(%)"] = pd.to_numeric(df["殖利率(%)"], errors='coerce')
+
     # 5日平均
     pe_ma5 = df["本益比"].rolling(5).mean()
     dy_ma5 = df["殖利率(%)"].rolling(5).mean()
