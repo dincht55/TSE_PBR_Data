@@ -323,7 +323,7 @@ class TWSECacheManager:
             print("\n結果顯示：")
             self.show_Inf(results, setDateIndex)
 
-    def main(self, show=True):
+    def main(self, show=True, index_map={"20251201": 949}):
         cache = self.cache_init()
 
         # 取得近日日期
@@ -339,6 +339,6 @@ class TWSECacheManager:
         if show:
             print('\n顯示近31天的結果：')
             # 顯示近期結果
-            self.show_Inf(all_results)
+            self.show_Inf(all_results, index_map=index_map)
 
         return cache
